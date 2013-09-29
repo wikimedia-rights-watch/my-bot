@@ -1,7 +1,9 @@
-rights.txt
-channels.txt
-factsin.txt
+*.txt
+javadocs
+*.jar
 
 # Package Files #
 *.war
 *.ear
+*.class
+
