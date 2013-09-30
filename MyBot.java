@@ -373,7 +373,10 @@ public void onPrivateMessage(String sender, String login, String hostname, Strin
 			}
 			else if (message.startsWith("!forget")) {
 				String key = message.replace("!forget ","");
-				factoids.remove(key);
+				if (factoids.remove(key) == null) {
+					sendMessage(channel, "There is no "+key+"!");
+					return;
+				}
 				sendMessage(channel, "Ok, "+key+" is forgotten");
 				try {
 					BufferedWriter writer = new BufferedWriter(new FileWriter("factsin.txt"));
