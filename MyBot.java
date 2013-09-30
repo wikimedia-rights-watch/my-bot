@@ -78,30 +78,39 @@ public class MyBot extends PircBot {
 		reload();
 		time = time2 = time3 = System.nanoTime();
 		counter = 0;
-		this.setName("USRD_bot");
+		
 		try {
-		BufferedReader reader = new BufferedReader(new FileReader("factsin.txt"));
-		String line = null;
-		while ((line=reader.readLine()) != null)
-		{
-			String key = line;
-			line = reader.readLine();
-			String fact = line;
-			factoids.put(key,fact);
-		}
-		factoids.put("help", "This bot supports help, (super)op, quit, admin(@commons/meta/data/enwikivoyage/simple), checkuser, oversight(@data), filemover@commons, road, and bell, as well as basic link expansion. Learning and forgetting of commands is supported using is as well as answer. Ops can control the bot with !add and !remove.");
-	    reader.close();
+			BufferedReader reader;
+			
+			//set the nick
+			reader = new BufferedReader(new FileReader("nick.txt"));
+			this.setName(reader.readLine());
+			reader.close();
+			
+			//read in the fact file
+			reader = new BufferedReader(new FileReader("factsin.txt"));
+			String line = null;
+			while ((line=reader.readLine()) != null)
+			{
+				String key = line;
+				line = reader.readLine();
+				String fact = line;
+				factoids.put(key,fact);
+			}
+			factoids.put("help", "This bot supports help, (super)op, quit, admin(@commons/meta/data/enwikivoyage/simple), checkuser, oversight(@data), filemover@commons, road, and bell, as well as basic link expansion. Learning and forgetting of commands is supported using is as well as answer. Ops can control the bot with !add and !remove.");
+	  		reader.close();
 	    
-	    reader = new BufferedReader(new FileReader("point.txt"));
-		POINT_KEY = reader.readLine();
-		POINT_VALUE = reader.readLine();
-		reader.close();
+	    	//read in the points alias
+	   		reader = new BufferedReader(new FileReader("point.txt"));
+			POINT_KEY = reader.readLine();
+			POINT_VALUE = reader.readLine();
+			reader.close();
 		
-		toKick = 0;
-	}
-	catch (IOException e) {
+			toKick = 0;
+		}
+		catch (IOException e) {
 		
-	}
+		}
 	}
 	
 	private void sendSenderMessage(String channel, String sender, String message) {
