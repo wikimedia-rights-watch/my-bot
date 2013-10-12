@@ -9,7 +9,7 @@ public class MyBotMain {
         MyBot bot = new MyBot();
         
         // Enable debugging output.
-        bot.setVerbose(true);
+        bot.setVerbose(false);
         
         // Connect to the IRC server.
         bot.connect("irc.freenode.net");
