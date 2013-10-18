@@ -31,6 +31,7 @@ public class MyBot extends PircBot {
 	private static String AAROADS_ADMINS;
 	private static String POINT_KEY;
 	private static String POINT_VALUE;
+	private static String TEMPLATE;
 	int hash = 0;
 	
 	/*
@@ -57,6 +58,7 @@ public class MyBot extends PircBot {
 				this.CU = rights.readLine();
 				this.OS = rights.readLine();
 				this.AAROADS_ADMINS = rights.readLine();
+				this.TEMPLATE = rights.readLine();
 
 				rights.close();
 				BufferedReader checker = new BufferedReader(new FileReader("check.txt"));
@@ -428,6 +430,9 @@ public void onPrivateMessage(String sender, String login, String hostname, Strin
 			}
 			else if (message.startsWith("!oversight")) {
 				sendSenderMessage(channel, sender, OS);
+			}
+			else if (message.startsWith("!template")) {
+				sendSenderMessage(channel, sender, TEMPLATE);
 			}
 			else if (message.toLowerCase().startsWith("!otrs")) {
 				sendSenderMessage(channel, sender, OTRS);
