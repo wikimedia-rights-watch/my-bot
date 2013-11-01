@@ -28,6 +28,7 @@ public class MyBot extends PircBot {
 	private static String DATA_OS;
 	private static String CU;
 	private static String OS;
+	private static String GS;
 	private static String AAROADS_ADMINS;
 	private static String POINT_KEY;
 	private static String POINT_VALUE;
@@ -59,6 +60,7 @@ public class MyBot extends PircBot {
 				this.OS = rights.readLine();
 				this.AAROADS_ADMINS = rights.readLine();
 				this.TEMPLATE = rights.readLine();
+				this.GS = rights.readLine();
 
 				rights.close();
 				BufferedReader checker = new BufferedReader(new FileReader("check.txt"));
@@ -445,6 +447,10 @@ public void onPrivateMessage(String sender, String login, String hostname, Strin
 			}
 			else if (message.startsWith("!road")) {
 				sendSenderMessage(channel, sender, ROAD);
+			}
+			
+			else if (message.startsWith("!gs")) {
+				sendSenderMessage(channel, sender, GS);
 			}
 		else if (message.startsWith("!"+POINT_KEY) && !isOn(CHECK, channel) && !isOn(CHECK, "#wikipedia-en-roads") && !isOn(CHECK, "#wikipedia-en-roads-rc")  && iq) {
 			sendMessage(channel, POINT_VALUE.replace("%d", ((int)(Math.max( (Math.random() * 1000), 101)+100*factor)+"")));
