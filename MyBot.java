@@ -353,18 +353,19 @@ public void onPrivateMessage(String sender, String login, String hostname, Strin
 					if (message.startsWith("!remove channel")) {
 						if (channel.equals(master) && message.equals("!remove channel")) {
 							sendSenderMessage(channel, sender, ": You cannot remove the master channel!");
-							return;
 						}
 						else if (message.equals("!remove channel")) {
 							partChannel(channel, "Requested by "+sender);
-							return;
+							syncChannels();
 						}
 						else if (!channel.equals(master)) {
 							sendSenderMessage(channel, sender, ": You must be in the master channel to do that!");
 							return;
 						}
-						partChannel(message.replace("!remove channel ",""), "Requested by "+sender);
-						syncChannels();
+						else {
+							partChannel(message.replace("!remove channel ",""), "Requested by "+sender);
+							syncChannels();
+						}
 					}
 					else if (message.startsWith("!remove trigger")) {
 						sendSenderMessage(channel, sender, ": That does not work yet!");
