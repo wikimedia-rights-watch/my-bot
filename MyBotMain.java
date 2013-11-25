@@ -27,6 +27,7 @@ public class MyBotMain {
         try {
 			BufferedReader reader = new BufferedReader(new FileReader("channels.txt"));
 			String line = reader.readLine();
+			bot.setMaster(line);
         	while ((line) != null) {
 					bot.joinChannel(line);
 					waiting (10);

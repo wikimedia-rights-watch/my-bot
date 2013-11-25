@@ -33,8 +33,12 @@ public class MyBot extends PircBot {
 	private static String POINT_KEY;
 	private static String POINT_VALUE;
 	private static String TEMPLATE;
+	private static String master;
 	int hash = 0;
 	
+	public void setMaster(String value) {
+		master = value;
+	}
 	/*
 	Reloads from certain configuration files
 	*/
@@ -347,7 +351,19 @@ public void onPrivateMessage(String sender, String login, String hostname, Strin
 				if (isOp(sender, channel))
 				{
 					if (message.startsWith("!remove channel")) {
-						partChannel(channel, "User request");
+						if (channel.equals(master) && message.equals("!remove channel")) {
+							sendSenderMessage(channel, sender, ": You cannot remove the master channel!");
+							return;
+						}
+						else if (message.equals("!remove channel")) {
+							partChannel(channel, "Requested by "+sender);
+							return;
+						}
+						else if (!channel.equals(master)) {
+							sendSenderMessage(channel, sender, ": You must be in the master channel to do that!");
+							return;
+						}
+						partChannel(message.replace("!remove channel ",""), "Requested by "+sender);
 						syncChannels();
 					}
 					else if (message.startsWith("!remove trigger")) {
