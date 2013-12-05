@@ -236,10 +236,6 @@ public void onPrivateMessage(String sender, String login, String hostname, Strin
 	else if (message.startsWith("!factor")) {
 		sendMessage(sender, "Factor is: "+factor);
 	}
-	else if (message.startsWith("!switch")) {
-		iq = !iq;
-		sendMessage(sender, "IQ is: "+iq);
-	}
 	else if (message.startsWith("!")) {
 		String key = message.replace("!","");
 		if (message.contains(" answer "))
@@ -469,7 +465,7 @@ public void onPrivateMessage(String sender, String login, String hostname, Strin
 			else if (message.startsWith("!gs")) {
 				sendSenderMessage(channel, sender, GS);
 			}
-		else if (message.startsWith("!"+POINT_KEY) && !isOn(CHECK, channel) && !isOn(CHECK, "#wikipedia-en-roads") && !isOn(CHECK, "#wikipedia-en-roads-rc")  && iq) {
+		else if (message.startsWith("!"+POINT_KEY)) {
 			sendMessage(channel, POINT_VALUE.replace("%d", ((int)(Math.max( (Math.random() * 1000), 101)+100*factor)+"")));
 			factor = 0;
 		}
