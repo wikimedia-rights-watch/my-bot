@@ -12,7 +12,6 @@ public class MyBot extends PircBot {
 	long time3;
 	int counter;
 	int toKick;
-	boolean iq = true;
 	double  factor = 0.0;
 	private static String CHAN_SUPEROPS;
 	private static String CHAN_OPS;
@@ -307,7 +306,6 @@ public void onPrivateMessage(String sender, String login, String hostname, Strin
 
 				if (isOp(sender, channel))
 				{
-					syncChannels();
 					quitServer("User request to terminate");
 					System.exit(0);
 				}
