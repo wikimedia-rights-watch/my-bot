@@ -12,7 +12,7 @@ public class MyBot extends PircBot {
 	long time3;
 	int counter;
 	int toKick;
-	double  factor = 0.0;
+	double factor = 0.0;
 	private static String CHAN_SUPEROPS;
 	private static String CHAN_OPS;
 	private static String ADMINS;
