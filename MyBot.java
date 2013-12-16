@@ -33,6 +33,7 @@ public class MyBot extends PircBot {
 	private static String POINT_VALUE;
 	private static String TEMPLATE;
 	private static String master;
+	public static Vector<Channel> channelList;
 	int hash = 0;
 	
 	public void setMaster(String value) {
@@ -85,6 +86,8 @@ public class MyBot extends PircBot {
 		reload();
 		time = time2 = time3 = System.nanoTime();
 		counter = 0;
+		
+		channelList = new Vector<Channel>();
 		
 		try {
 			BufferedReader reader;
@@ -551,7 +554,7 @@ public void onPrivateMessage(String sender, String login, String hostname, Strin
 			sendAction(channel, "gags");
 			
 		}
-		else if (message.toLowerCase().contains("pink")) {
+		else if (message.toLowerCase().contains("pink ") || message.toLowerCase().contains(" pink") || message.toLowerCase().equals("pink")) {
 			counter++;
 			factor+=5;
 			if (!checkTime(channel))
