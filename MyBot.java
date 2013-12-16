@@ -554,7 +554,7 @@ public void onPrivateMessage(String sender, String login, String hostname, Strin
 			sendAction(channel, "gags");
 			
 		}
-		else if (message.toLowerCase().contains("pink ") || message.toLowerCase().contains(" pink") || message.toLowerCase().equals("pink")) {
+		else if (message.toLowerCase().contains("pink ") || message.toLowerCase().contains(" pink ") || message.toLowerCase().equals("pink")) {
 			counter++;
 			factor+=5;
 			if (!checkTime(channel))
