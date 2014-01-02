@@ -15,5 +15,6 @@ notifications:
   irc:
   - "chat.freenode.net##rschen7754"
   - "chat.freenode.net#wikipedia-en-roads-rc"
-  on_success: always
+  on_success: change
+  on_failure: always
 
