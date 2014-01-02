@@ -10,3 +10,10 @@ before_script:
 
 script: make
 
+notifications:
+  email: false
+  irc:
+  - "chat.freenode.net##rschen7754"
+  - "chat.freenode.net#wikipedia-en-roads-rc"
+  on_success: always
+
