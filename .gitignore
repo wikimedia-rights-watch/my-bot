@@ -1,6 +1,7 @@
 *.txt
 javadocs
 *.jar
+*.swp
 
 # Package Files #
 *.war
