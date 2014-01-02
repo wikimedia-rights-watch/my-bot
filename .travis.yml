@@ -3,7 +3,9 @@ language:
 
 before_script:
  - wget www.jibble.org/files/pircbot-1.5.0.zip
- - unzip pircbot-1.5.0.zip -d .
+ - unzip pircbot-1.5.0.zip
+ - ls
+ - cp pircbot-1.5.0/* .
  - ls
 
 script: make
