@@ -1,5 +1,7 @@
 language:
  - java
 
+before_script: "wget www.jibble.org/files/pircbot-1.5.0.zip"
+
 script: "make"
 
