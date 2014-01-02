@@ -33,7 +33,7 @@ public class MyBot extends PircBot {
 	private static String POINT_VALUE;
 	private static String TEMPLATE;
 	private static String master;
-	public static Vector<Channel> channelList;
+	public static ArrayList<Channel> channelList;
 	int hash = 0;
 	
 	public void setMaster(String value) {
@@ -87,7 +87,7 @@ public class MyBot extends PircBot {
 		time = time2 = time3 = System.nanoTime();
 		counter = 0;
 		
-		channelList = new Vector<Channel>();
+		channelList = new ArrayList<Channel>();
 		
 		try {
 			BufferedReader reader;
@@ -796,6 +796,11 @@ public void onPrivateMessage(String sender, String login, String hostname, Strin
 				sendMessage(channel, output);
 		}
 	
+	}
+	
+	//wrapper function
+	public void joinChannel(Channel channel) {
+		joinChannel(channel.getName());
 	}
 
 }
