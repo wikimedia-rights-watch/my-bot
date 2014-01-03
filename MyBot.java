@@ -32,13 +32,9 @@ public class MyBot extends PircBot {
 	private static String POINT_KEY;
 	private static String POINT_VALUE;
 	private static String TEMPLATE;
-	private static String master;
-	public static ArrayList<Channel> channelList;
+	public static ArrayList<Channel> channelList; //should really be private...
 	int hash = 0;
 	
-	public void setMaster(String value) {
-		master = value;
-	}
 	/*
 	Reloads from certain configuration files
 	*/
@@ -173,6 +169,7 @@ public class MyBot extends PircBot {
 		super.onServerPing(response);
 		checkReassess();
 	}
+	
 	public boolean checkTime(String channel) {
 		long now = System.nanoTime();
 		if (counter > 2) {
@@ -264,17 +261,32 @@ public void onPrivateMessage(String sender, String login, String hostname, Strin
 		System.exit (-1);
 	}
 
-	public void syncChannels() {
+	/*
+	Write channel list to disk
+	*/
+	public void writeChannels() {
 		try {
 			BufferedWriter writer = new BufferedWriter(new FileWriter("channels.txt"));
-			String[] channels = getChannels();
-			for (int i=0; i < channels.length; i++) {
-				writer.write (channels[i] +"\n");
+			writer.write("%channels;" + channelList.size()+"\n");
+			for (int i=0; i < channelList.size(); i++) {
+				Channel channel = channelList.get(i);
+				writer.write (channel.getName() + ";" + channel.isMaster());
 			}
 			writer.close();
 		}
 		catch (Exception e) {
 		}
+	}
+	
+	/*
+	Find a channel in the data structure by name
+	*/
+	public Channel findChannel(String name) {
+		for (int i=0; i < channelList.size(); i++) {
+				if (channelList.get(i).getName().equals(name))
+					return channelList.get(i);
+			}
+		return null;
 	}
 
 	/*
@@ -322,8 +334,12 @@ public void onPrivateMessage(String sender, String login, String hostname, Strin
 				if (isOp(sender, channel))
 				{
 					if (message.startsWith("!add channel")) {
-						joinChannel(message.replace("!add channel ",""));
-						syncChannels();
+						//TODO - create a channel object first, and add it to the list
+						String channelName = message.replace("!add channel ","");
+						Channel chanObject = new Channel(channelName, false);
+						joinChannel(chanObject);
+						channelList.add(chanObject);
+						writeChannels();
 					}
 					else if (message.startsWith("!add trigger")) {
 						sendSenderMessage(channel, sender, ": That does not work yet!");
@@ -349,7 +365,7 @@ public void onPrivateMessage(String sender, String login, String hostname, Strin
 				{
 					if (message.startsWith("!remove channel")) {
 						if (channel.equals(master) && message.equals("!remove channel")) {
-							sendSenderMessage(channel, sender, ": You cannot remove the master channel!");
+							sendSenderMessage(channel, sender, ": You cannot remove a master channel!");
 						}
 						else if (message.equals("!remove channel")) {
 							partChannel(channel, "Requested by "+sender);
