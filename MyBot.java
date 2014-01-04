@@ -364,20 +364,35 @@ public void onPrivateMessage(String sender, String login, String hostname, Strin
 				if (isOp(sender, channel))
 				{
 					if (message.startsWith("!remove channel")) {
-						if (channel.equals(master) && message.equals("!remove channel")) {
+						//if !remove channel, check to see if master, if it is, reject
+						//if it is NOT a master, then remove the channel
+						Channel thisChannel = findChannel(channel);
+						
+						if (thisChannel.isMaster() && message.equals("!remove channel")) {
 							sendSenderMessage(channel, sender, ": You cannot remove a master channel!");
 						}
 						else if (message.equals("!remove channel")) {
 							partChannel(channel, "Requested by "+sender);
-							syncChannels();
+							channelList.remove(thisChannel);
+							writeChannels();
 						}
-						else if (!channel.equals(master)) {
+						
+						//if !remove channel #channel, see if it is a master, if NOT, reject
+						//else, remove the channel
+						//what if the channel is invalid?
+						else if (!thisChannel.isMaster()) {
 							sendSenderMessage(channel, sender, ": You must be in the master channel to do that!");
 							return;
 						}
 						else {
-							partChannel(message.replace("!remove channel ",""), "Requested by "+sender);
-							syncChannels();
+							Channel partingChannel = findChannel(message.replace("!remove channel ",""));
+							if (partingChannel == null)
+								sendSenderMessage(channel, sender, ": The bot is not in that channel!");
+							else {
+								partChannel(partingChannel.getName(), "Requested by "+sender);
+								channelList.remove(partingChannel);
+								writeChannels();
+							}
 						}
 					}
 					else if (message.startsWith("!remove trigger")) {
