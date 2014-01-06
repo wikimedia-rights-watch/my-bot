@@ -270,7 +270,7 @@ public void onPrivateMessage(String sender, String login, String hostname, Strin
 			writer.write("%channels;" + channelList.size()+"\n");
 			for (int i=0; i < channelList.size(); i++) {
 				Channel channel = channelList.get(i);
-				writer.write (channel.getName() + ";" + channel.isMaster());
+				writer.write (channel.getName() + ";" + channel.isMaster() + "\n");
 			}
 			writer.close();
 		}
