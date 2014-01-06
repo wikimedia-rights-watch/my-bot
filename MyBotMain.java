@@ -22,17 +22,28 @@ public class MyBotMain {
 		}
 		catch (Exception e) {
 		}
-        	bot.identify(password);
+        
+        //Identify to NickServ
+        bot.identify(password);
         	
         try {
 			BufferedReader reader = new BufferedReader(new FileReader("channels.txt"));
+			
+			//this is the header
 			String line = reader.readLine();
-			bot.setMaster(line);
-        	while ((line) != null) {
-					bot.joinChannel(line);
-					waiting (10);
-					line = reader.readLine();
-				}
+			
+			String[] header = line.split(";");
+			int numChannels = Integer.parseInt(header[1]);
+			
+			for (int i = 0; i < numChannels; i++) {
+				line = reader.readLine();
+				String[] pieces = line.split(";");
+				Channel channel = new Channel(pieces[0],Boolean.parseBoolean(pieces[1]));
+				bot.joinChannel(channel);
+				bot.channelList.add(channel);
+				waiting (10);
+			}
+			
 			reader.close();
 		}
 		catch (Exception e) {

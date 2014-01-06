@@ -32,13 +32,9 @@ public class MyBot extends PircBot {
 	private static String POINT_KEY;
 	private static String POINT_VALUE;
 	private static String TEMPLATE;
-	private static String master;
-	public static Vector<Channel> channelList;
+	public static ArrayList<Channel> channelList; //should really be private...
 	int hash = 0;
 	
-	public void setMaster(String value) {
-		master = value;
-	}
 	/*
 	Reloads from certain configuration files
 	*/
@@ -87,7 +83,7 @@ public class MyBot extends PircBot {
 		time = time2 = time3 = System.nanoTime();
 		counter = 0;
 		
-		channelList = new Vector<Channel>();
+		channelList = new ArrayList<Channel>();
 		
 		try {
 			BufferedReader reader;
@@ -173,6 +169,7 @@ public class MyBot extends PircBot {
 		super.onServerPing(response);
 		checkReassess();
 	}
+	
 	public boolean checkTime(String channel) {
 		long now = System.nanoTime();
 		if (counter > 2) {
@@ -264,17 +261,32 @@ public void onPrivateMessage(String sender, String login, String hostname, Strin
 		System.exit (-1);
 	}
 
-	public void syncChannels() {
+	/*
+	Write channel list to disk
+	*/
+	public void writeChannels() {
 		try {
 			BufferedWriter writer = new BufferedWriter(new FileWriter("channels.txt"));
-			String[] channels = getChannels();
-			for (int i=0; i < channels.length; i++) {
-				writer.write (channels[i] +"\n");
+			writer.write("%channels;" + channelList.size()+"\n");
+			for (int i=0; i < channelList.size(); i++) {
+				Channel channel = channelList.get(i);
+				writer.write (channel.getName() + ";" + channel.isMaster() + "\n");
 			}
 			writer.close();
 		}
 		catch (Exception e) {
 		}
+	}
+	
+	/*
+	Find a channel in the data structure by name
+	*/
+	public Channel findChannel(String name) {
+		for (int i=0; i < channelList.size(); i++) {
+				if (channelList.get(i).getName().equals(name))
+					return channelList.get(i);
+			}
+		return null;
 	}
 
 	/*
@@ -322,8 +334,12 @@ public void onPrivateMessage(String sender, String login, String hostname, Strin
 				if (isOp(sender, channel))
 				{
 					if (message.startsWith("!add channel")) {
-						joinChannel(message.replace("!add channel ",""));
-						syncChannels();
+						//TODO - create a channel object first, and add it to the list
+						String channelName = message.replace("!add channel ","");
+						Channel chanObject = new Channel(channelName, false);
+						joinChannel(chanObject);
+						channelList.add(chanObject);
+						writeChannels();
 					}
 					else if (message.startsWith("!add trigger")) {
 						sendSenderMessage(channel, sender, ": That does not work yet!");
@@ -348,20 +364,35 @@ public void onPrivateMessage(String sender, String login, String hostname, Strin
 				if (isOp(sender, channel))
 				{
 					if (message.startsWith("!remove channel")) {
-						if (channel.equals(master) && message.equals("!remove channel")) {
-							sendSenderMessage(channel, sender, ": You cannot remove the master channel!");
+						//if !remove channel, check to see if master, if it is, reject
+						//if it is NOT a master, then remove the channel
+						Channel thisChannel = findChannel(channel);
+						
+						if (thisChannel.isMaster() && message.equals("!remove channel")) {
+							sendSenderMessage(channel, sender, ": You cannot remove a master channel!");
 						}
 						else if (message.equals("!remove channel")) {
 							partChannel(channel, "Requested by "+sender);
-							syncChannels();
+							channelList.remove(thisChannel);
+							writeChannels();
 						}
-						else if (!channel.equals(master)) {
+						
+						//if !remove channel #channel, see if it is a master, if NOT, reject
+						//else, remove the channel
+						//what if the channel is invalid?
+						else if (!thisChannel.isMaster()) {
 							sendSenderMessage(channel, sender, ": You must be in the master channel to do that!");
 							return;
 						}
 						else {
-							partChannel(message.replace("!remove channel ",""), "Requested by "+sender);
-							syncChannels();
+							Channel partingChannel = findChannel(message.replace("!remove channel ",""));
+							if (partingChannel == null)
+								sendSenderMessage(channel, sender, ": The bot is not in that channel!");
+							else {
+								partChannel(partingChannel.getName(), "Requested by "+sender);
+								channelList.remove(partingChannel);
+								writeChannels();
+							}
 						}
 					}
 					else if (message.startsWith("!remove trigger")) {
@@ -796,6 +827,11 @@ public void onPrivateMessage(String sender, String login, String hostname, Strin
 				sendMessage(channel, output);
 		}
 	
+	}
+	
+	//wrapper function
+	public void joinChannel(Channel channel) {
+		joinChannel(channel.getName());
 	}
 
 }
