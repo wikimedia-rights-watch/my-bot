@@ -38,7 +38,7 @@ public class MyBotMain {
 			for (int i = 0; i < numChannels; i++) {
 				line = reader.readLine();
 				String[] pieces = line.split(";");
-				Channel channel = new Channel(pieces[0],Boolean.parseBoolean(pieces[1]));
+				Channel channel = new Channel(pieces[0].replace(";",""),Boolean.parseBoolean(pieces[1]));
 				bot.joinChannel(channel);
 				bot.channelList.add(channel);
 				waiting (10);
