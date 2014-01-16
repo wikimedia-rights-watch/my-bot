@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class Channel {
 	private String name;
 	private boolean master;
