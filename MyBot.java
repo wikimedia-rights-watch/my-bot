@@ -32,6 +32,7 @@ public class MyBot extends PircBot {
 	private static String POINT_KEY;
 	private static String POINT_VALUE;
 	private static String TEMPLATE;
+	private static String STEWARDS;
 	public static ArrayList<Channel> channelList; //should really be private...
 	int hash = 0;
 	
@@ -61,6 +62,7 @@ public class MyBot extends PircBot {
 				this.AAROADS_ADMINS = rights.readLine();
 				this.TEMPLATE = rights.readLine();
 				this.GS = rights.readLine();
+				this.STEWARDS = rights.readLine();
 
 				rights.close();
 				BufferedReader checker = new BufferedReader(new FileReader("check.txt"));
@@ -496,6 +498,9 @@ public void onPrivateMessage(String sender, String login, String hostname, Strin
 			
 			else if (message.startsWith("!gs")) {
 				sendSenderMessage(channel, sender, GS);
+			}
+			else if (message.startsWith("!steward")) {
+				sendSenderMessage(channel, sender, STEWARDS);
 			}
 		else if (message.startsWith("!"+POINT_KEY)) {
 			sendMessage(channel, POINT_VALUE.replace("%d", ((int)(Math.max( (Math.random() * 1000), 101)+100*factor)+"")));

@@ -2,6 +2,8 @@ public class Channel {
 	private String name;
 	private boolean master;
 	
+	public static ArrayList<Trigger> triggerList;
+	
 	public Channel(String name, boolean master) {
 		this.name=name;
 		this.master=master;
