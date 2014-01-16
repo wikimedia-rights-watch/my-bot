@@ -523,13 +523,11 @@ public void onPrivateMessage(String sender, String login, String hostname, Strin
 			if (message.contains(" answer "))
 			{
 				String[] pieces = key.split(" answer ");
-				//sendMessage(channel, pieces[0]);
-				//sendMessage(channel, pieces[1]);
+
 				factoids.put(pieces[0],pieces[1]);
 				sendMessage(channel, "I'll remember that.");
 				try {
-					//sendMessage(channel, pieces[0]);
-					//sendMessage(channel, pieces[1]);
+
 					BufferedWriter writer = new BufferedWriter(new FileWriter("factsin.txt"));
 					Set<String> keys = factoids.keySet();
 					for (String test: keys)
@@ -548,13 +546,11 @@ public void onPrivateMessage(String sender, String login, String hostname, Strin
 			else if (message.contains(" is "))
 			{
 				String[] pieces = key.split(" is ");
-				//sendMessage(channel, pieces[0]);
-				//sendMessage(channel, pieces[1]);
+
 				factoids.put(pieces[0],key);
 				sendMessage(channel, "I'll remember that.");
 				try {
-					//sendMessage(channel, pieces[0]);
-					//sendMessage(channel, pieces[1]);
+
 					BufferedWriter writer = new BufferedWriter(new FileWriter("factsin.txt"));
 					Set<String> keys = factoids.keySet();
 					for (String test: keys)
@@ -576,84 +572,7 @@ public void onPrivateMessage(String sender, String login, String hostname, Strin
 				sendMessage(channel, key + "? I don't know what you're going on about...");
 			}
 		}
-		else if (message.toLowerCase().contains("pink underwear")) {
-			counter++;
-			factor+=15;
-			if (!checkTime(channel))
-			sendAction(channel, "gags");
-			
-		}
-		else if (message.toLowerCase().contains("underwear")) {
-			counter++;
-			factor+=10;
-			if (!checkTime(channel))
-			sendAction(channel, "gags");
-			
-		}
-		else if (message.toLowerCase().contains("pink ") || message.toLowerCase().contains(" pink ") || message.toLowerCase().equals("pink")) {
-			counter++;
-			factor+=5;
-			if (!checkTime(channel))
-			sendAction(channel, "gags");
-			
-		}
-		else if (message.toLowerCase().contains("holister")) {
-			counter++;
-			factor++;
-			if (!checkTime(channel))
-			sendAction(channel, "gags");
-			
-		}
-		else if (message.toLowerCase().contains("tilly")) {
-			counter++;
-			factor++;
-			if (!checkTime(channel))
-			sendAction(channel, "gags");
-			
-		}
-		else if (message.toLowerCase().contains("dord ") || message.toLowerCase().equals("dord ")) {
-			counter--;
-			factor--;
-			sendMessage(channel, sender + ": DoRD is an enwiki checkuser.");
-			
-		}
-		else if (message.toLowerCase().equals(":>") || message.toLowerCase().equals(":^") ||message.toLowerCase().equals(":v")) {
-			counter++;
-			factor++;
-			sendMessage(channel, "Why so Emufarmers?");
-			
-		}
-		else if (message.toLowerCase().equals("derp")) {
-			counter--;
-			factor--;
-			sendMessage(channel, "derp is a LTA banned from #wikipedia, #wikipedia-en, #wikimedia-ops, and #wikimedia-stewards. He is allowed in #wikimedia-commons, #mediawiki, and #wikimedia-tech though.");
-			
-		}
-		else if (message.toLowerCase().contains("crombie")) {
-			counter++;
-			factor++;
-			if (!checkTime(channel))
-			sendAction(channel, "gags");
-			
-		}
-		else if (message.toLowerCase().contains("hollister") || message.toLowerCase().contains("h0llister") || message.toLowerCase().contains("ho1lister") || message.toLowerCase().contains("hol1ister") ||message.toLowerCase().contains("ho11ister") || message.toLowerCase().contains("h01lister") || message.toLowerCase().contains("h0l1ister") || message.toLowerCase().contains("h0llister")) {
-			counter++;
-			factor++;
-			if (!checkTime(channel))
-			sendAction(channel, "gags");
-			
-		}
-		else if (message.toLowerCase().contains("gift card")) {
-			counter++;
-			factor++;
-			sendAction(channel, "rolls eyes");	
-		}
-		else if (message.toLowerCase().contains("hco ") || message.toLowerCase().contains(" hco") ||message.toLowerCase().contains("hco.") || message.equalsIgnoreCase("hco")) {
-			counter++;
-			factor++;
-			if (!checkTime(channel))
-				sendAction(channel, "gags");
-		}
+
 		else if (message.contains("abuse") && message.contains("bot")) {
 			sendAction(channel, "frowns");
 			factor+=2;
