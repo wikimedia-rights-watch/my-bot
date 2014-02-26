@@ -711,13 +711,13 @@ public void onPrivateMessage(String sender, String login, String hostname, Strin
 			String output="https://en.wikipedia.org/wiki/";
 			for (boolean j=true;j==true;i++)
 			{
-				if (message.charAt(i)=='[')
+				if (message.charAt(i)=='[' && message.charAt(i+1)=='[')
 					{j=false;}
 			}
 			k=i+1;
 			for (boolean j=true;j==true;k++)
 			{
-				if (message.charAt(k)==']')
+				if (message.charAt(k)==']' && message.charAt(k+1)==']')
 					{j=false;}
 			}
 			output = output+message.substring(i+1,k-1);
