@@ -127,7 +127,7 @@ public class MyBot extends PircBot {
 	public void checkReassess() {
 		BufferedReader result = null;
 		    try {
-		     	URL urlObject = new URL("http://en.wikipedia.org/w/api.php?action=query&list=categorymembers&cmtitle=Category:U.S._Roads_project_articles_needing_reassessment&format=xml");
+		     	URL urlObject = new URL("http://en.wikipedia.org/w/api.php?action=query&list=categorymembers&cmtitle=Category:U.S._Roads_project_articles_needing_reassessment&format=xml&rawcontinue=yes");
 		      	HttpURLConnection connection = (HttpURLConnection) urlObject.openConnection();
 		      	InputStream in = connection.getInputStream();
 		      	result = new BufferedReader(new InputStreamReader(in));
