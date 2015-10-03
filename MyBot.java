@@ -621,23 +621,8 @@ public void onPrivateMessage(String sender, String login, String hostname, Strin
 			factor+=0.1;
 			sendMessage(channel, "*I'm");
 		}
-		else if (message.contains("quiet")) {
-			factor+=0.5;
-		}
-		else if (message.contains("bored")) {
-			factor+=2;
-		}
-		else if (message.contains("?")) {
-			factor+=0.25;
-		}
-		else if (message.contains("mall")) {
-			factor+=2;
-		}
-		else if (message.contains("dead")) {
-			factor+=1;
-		}
 
-		if (message.contains("[[commons:") && message.contains("]]")) {
+		if (((message.contains("[[commons:") || message.contains("[[c:"))) && message.contains("]]")) {
 			int i=0;
 			int k=0;
 			String output="https://commons.wikimedia.org/wiki/";
@@ -655,6 +640,7 @@ public void onPrivateMessage(String sender, String login, String hostname, Strin
 			output = output+message.substring(i+1,k-1);
 
 			output = output.replace(" ","_");
+			output = output.replace("c:","");
 			output = output.replace("commons:","");
 			sendMessage(channel, output);
 		}
