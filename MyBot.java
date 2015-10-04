@@ -126,7 +126,8 @@ public class MyBot extends PircBot {
 		//sendMessage(channel, channel);
 	}
 	
-	public void checkReassess() {
+	public void checkReassess() { /*
+	This was a roads-specific function but I'm leaving the code here just in case it becomes useful later on
 		BufferedReader result = null;
 		    try {
 		     	URL urlObject = new URL("http://en.wikipedia.org/w/api.php?action=query&list=categorymembers&cmtitle=Category:U.S._Roads_project_articles_needing_reassessment&format=xml&rawcontinue=yes");
@@ -164,7 +165,7 @@ public class MyBot extends PircBot {
 		      System.out.println("URL string is invalid");
 		    } catch (IOException ioe) {
 		      System.out.println("Error opening URL connection");
-		    }
+		    }*/
 	}
 
 	public void onServerPing(String response) {
@@ -225,11 +226,11 @@ public void onPrivateMessage(String sender, String login, String hostname, Strin
 	else if (message.equals("!gag")) {
 		counter++;
 		factor++;
-		if (!checkTime("#wikipedia-en-roads"))
-		sendAction("#wikipedia-en-roads", "gags");
+		//if (!checkTime("#wikipedia-en-roads"))
+		//sendAction("#wikipedia-en-roads", "gags");
 	}
 	else if (message.startsWith("!reset")) {
-		sendMessage("Chanserv","OP #wikipedia-en-roads -USRD_bot");
+		//sendMessage("Chanserv","OP #wikipedia-en-roads -USRD_bot");
 		sendMessage("Chanserv","OP ##rschen7754 -USRD_bot");
 		counter = 0;
 		reload();
