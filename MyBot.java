@@ -42,7 +42,7 @@ public class MyBot extends PircBot {
 	public void reload() {
 		BufferedReader rights = null;
 		    try {
-		   		URL urlObject = new URL("http://www.rschen7754.com/rights.txt");
+		   		URL urlObject = new URL("https://raw.githubusercontent.com/wikimedia-rights-watch/my-bot/dynamictriggers/rights.list");
 		    	HttpURLConnection connection = (HttpURLConnection) urlObject.openConnection();
 		     	InputStream in = connection.getInputStream();
 		     	rights = new BufferedReader(new InputStreamReader(in));
